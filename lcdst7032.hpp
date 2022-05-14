@@ -9,6 +9,7 @@
 #define INC_LCDST7032_HPP_
 
 #include <vector>
+#include <string>
 #include "main.h"
 
 class lcdSt7032 {
@@ -31,8 +32,9 @@ public:
 	void setFollowerControll(bool enableFollowerCircuit, uint8_t followerAmplifiedRatio);
 	void setContrast(uint8_t contrast);
 	void setCursor(uint8_t x, uint8_t y);
-//	void print(const char *string);
-//	void print(const char *string, uint8_t length);
+	void print(const char *string);
+	void print(const char *string, uint8_t length);
+	void print(uint8_t num);
 	void initLCD(uint8_t contrast);
 private:
 	I2C_HandleTypeDef *i2c;

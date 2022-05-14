@@ -21,6 +21,9 @@ void lcdSt7032::clearDisplay(){
 	writeCommand(0b1);
 }
 
+/**
+ * カーソルをホームポジションに移動する関数
+ */
 void lcdSt7032::returnHome(){
 	writeCommand(0b10);
 }
@@ -37,6 +40,10 @@ void lcdSt7032::setFunction(bool is8bits, bool is2Line, bool isDoubleHight, bool
 	writeCommand(0b100000 | is8bits<<4 | is2Line<<3 | (isDoubleHight & !is2Line) << 2 | enableExtentionInstruction);
 }
 
+/**
+ * DDRAM=液晶画面の表示アドレスを指定する関数
+ * @param address
+ */
 void lcdSt7032::setDDRAMaddress(uint8_t address){
 	writeCommand(0b1<<7 | address);
 }
@@ -90,7 +97,11 @@ void lcdSt7032::setContrast(uint8_t contrast){
 }
 //display instruction end
 
-
+/**
+ * カーソルの位置を指定する関数
+ * @param x
+ * @param y
+ */
 void lcdSt7032::setCursor(uint8_t x, uint8_t y){
 	writeCommand(0b1<<7 | y<<6 | x);
 }
@@ -108,7 +119,7 @@ void lcdSt7032::writeCommand(uint8_t *buf, uint8_t size){
 
 
 
-/*
+
 void lcdSt7032::print(const char *string){
 	uint8_t buf[2]={0x40, 0};
 	while(*string){
@@ -124,7 +135,13 @@ void lcdSt7032::print(const char *string, uint8_t length){
 		HAL_I2C_Master_Transmit(i2c, addres<<1, buf, 2, timeout);
 	}
 }
-*/
+
+void lcdSt7032::print(uint8_t num){
+    std::string tmp = std::to_string(num);
+    char const *num_char = tmp.c_str();
+	print(num_char);
+}
+//*/
 
 void lcdSt7032::initLCD(uint8_t contrast){
 	setFunction(1, 1, 0, 0); //00111000
